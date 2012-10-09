@@ -1,0 +1,21 @@
+Begin4
+Title:		rr
+Version:	1.3
+Entered-date:	2007-10-07
+Description:	rr is a basic command-line utility designed to
+retain/recall file and directory paths.  This is done by treating
+the filename itself as a unique key to be referenced by for future
+rr program calls.  The purpose of this is to assist the user in
+shorthand typing and/or not having to remember arbitrary full paths.
+Keywords:	rr, retain, recall
+Copying-policy:	GPL
+Author:		v9@fakehalo.us (vade79)
+Maintained-by:	v9@fakehalo.us (vade79)
+Primary-site:	retain.sourceforge.net /
+		0 rr-1.3.tar.gz
+		0 rr-1.3.tar.bz2
+Alternate-site:	fakehalo.us /rr
+		0 rr-1.3.tar.gz
+		0 rr-1.3.tar.bz2
+Platforms:	C Compiler ANSI/POSIX (GNU gcc).
+End

@@ -1,0 +1,79 @@
+.\" retain / recall file and directory paths
+.TH "RR" "1" "September 2007" "fakehalo" "Retain and Recall"
+.SH "NAME"
+rr \- retain / recall file and directory paths
+.SH "SYNOPSIS"
+\fBrr\fR
+.br 
+\fBrr\fR [\fI/path/to/filename\fR | \fI/path/to/directory/\fR]
+.br 
+\fBrr\fR [\fIfilename\fR | \fIdirectory/\fR]
+.br 
+\fBrr\fR [\fIexec command\fR] [\fIargs ...\fR]
+.SH "DESCRIPTION"
+.PP 
+\fBrr\fR is a basic command\-line utility designed to retain/recall file and directory paths.  This is done by treating the filename itself as a unique key to be referenced for future \fBrr\fR program calls.  The purpose of this is to assist the user in shorthand typing and/or not having to remember arbitrary full paths.
+
+All retained values are stored in \fI~/.rr\fR, and are unique to each user.  If you are attempting to retain a path that has a filename or directory that has already been retained before, \fBrr\fR will retain the new path over the old path.
+
+When \fBrr\fR attempts to recall retained files or directories it will attempt to match the file or directory value explicitly.  If this does not result in a match, \fBrr\fR will fall back and attempt to partially match the file or directory value up to the amount of characters provided. 
+.SH "OPTIONS"
+.TP 
+\fBrr\fR
+.br 
+Pass a file or directory value to stdin to be retained or recalled, then verbosely print it to stdout.  This does not include the ability to execute commands listed below as it is thought to be a potential security risk.
+
+.TP 
+\fBrr\fR [\fI/path/to/filename\fR | \fI/path/to/directory/\fR]
+.br 
+Retain a file or directory, then verbosely print it to stdout.  Note that directories are signified by a trailing slash.
+
+.TP 
+\fBrr\fR [\fIfilename\fR | \fIdirectory/\fR]
+.br 
+Recall a file or directory that has been previously retained, then verbosely print it to stdout.  Note that directories are signified by a trailing slash.
+
+.TP 
+\fBrr\fR [\fIexec command\fR] [\fIargs ...\fR]
+.br 
+Execute a command using retained files and directories.  In this form, retained values are referenced by a \fB//\fR prefix.
+.SH "EXAMPLE"
+.PP 
+
+# Retain the path of the desired file, and verbosely print it out.
+.br 
+\fBrr /etc/httpd/conf/httpd.conf\fR
+
+# Recall the retained value, and verbosely print it out.
+.br 
+\fBrr httpd.conf\fR
+
+# Execute vi on /etc/httpd/conf/httpd.conf. (designated by "//")
+.br 
+\fBrr vi //httpd.conf\fR
+
+# Retain a directory path.
+.br 
+\fBrr /etc/rc.d/init.d/\fR
+
+# Change directory to /etc/rc.d/init.d/
+.br 
+\fBcd `rr init.d/`\fR
+
+# List files matching: /etc/rc.d/init.d/s*
+.br
+# (the '*' may need to be quoted depending on your shell)
+.br
+\fBrr ls \-l //init.d/s*\fR
+.SH "FILES"
+~/.rr
+.br 
+.SH "AUTHOR"
+Written by v9/fakehalo. [v9@fakehalo.us]
+.SH "BUGS"
+Report bugs to <v9@fakehalo.us>.
+.SH "COPYRIGHT"
+Copyright \(co 2007 fakehalo.
+.br 
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

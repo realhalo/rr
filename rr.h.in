@@ -1,0 +1,109 @@
+/* [rr] rr.h :: retain / recall file and directory paths.
+** Copyright (C) 2007 fakehalo [v9@fakehalo.us]
+**
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+**/
+
+/* --- INCLUDES --- */
+
+#include "config.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <unistd.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+
+#ifdef HAVE_FCNTL_H  
+#include <fcntl.h>
+#endif
+
+#ifdef HAVE_PWD_H
+#include <pwd.h>
+#endif
+
+#ifdef HAVE_SYS_FCNTL_H
+#include <sys/fcntl.h>
+#endif
+
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
+#ifndef S_IFDIR
+#define S_IFDIR 0040000
+#endif
+#ifndef S_IFMT
+#define S_IFMT 00170000
+#endif
+
+
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+
+#ifdef HAVE_GLOB
+#ifdef HAVE_GLOB_H
+#include <glob.h>
+#endif
+#ifdef GLOB_BRACE
+#define RR_GLOB_FLAGS GLOB_BRACE
+#else
+#define RR_GLOB_FLAGS 0
+#endif
+#endif
+
+/* --- DEFINES --- */
+
+#define RR_VERSION "%VERSION%"
+#define RR_CMPTIME "%CMPTIME%"
+
+#define RR_FILENAME	".rr"			/* becomes "~/.rr". */
+
+#define RR_MAXPATH	4096			/* maximum path length, including file. */
+#define RR_MSGSIZE	(RR_MAXPATH + 1024)	/* rr_error() message length. */
+#define RR_MVBLOCK	8192			/* buffersize for shifting blocks of "~/.rr" data.  */
+
+#define RR_STRICT	0			/* strict/exact recalling of retained values. */
+#define RR_PARTIAL	1			/* partial recalling of retained values. */
+
+char *prog;					/* argv[0] global pointer. (for rr_error verbose) */
+
+
+/* --- INTERNALS ---  */
+
+/* structure returned from rr_select(); */
+struct rr_select_struct {
+        off_t off;
+        ssize_t sz;
+        char path[RR_MAXPATH + 1];
+};
+
+/* prototypes. */
+void rr_error(char *, ...);
+char *rr_basename(char *, unsigned int);
+char *rr_fix(char *);
+void rr_chomp(char *);
+void rr_insert(signed int, off_t, char *);
+void rr_delete(signed int, off_t, size_t);
+struct rr_select_struct rr_select(signed int, FILE *, char *, unsigned int, unsigned char);
+void rr_exec(signed int, char **, signed int, FILE *);
+char *rr_rr_filename();

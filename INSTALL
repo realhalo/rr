@@ -1,0 +1,6 @@
+To install the "rr" command on your system it should be as easy as typing:
+
+./configure && make install
+
+
+(--prefix and --mandir are the standard supported ./configure options)

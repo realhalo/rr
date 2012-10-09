@@ -1,0 +1,17 @@
+v1.3
+- Fix for when passing a blank value to rr it would incorrectly
+  output the first retained value in ~/.rr.
+- Fix for overly-generous short-hand/partial matching of retained
+  values, which crippled some of rr's functionality.  Now rr strictly
+  searches for the whole filename/directory first, then uses the generous
+  partial matching as a fallback.
+- Minor miscellaneous code clean-up, changes, and error output standardization.
+- NOTE: I'm considering this a stable/mature project as it should not need
+  changes from here on... unless more bugs are found. :(
+
+v1.2
+- Initial release.
+- Added file globbing support for execution of retained directories.
+
+v1.1:
+- Initial version.

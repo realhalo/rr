@@ -1,0 +1,22 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(rr.h, 1.x, v9@fakehalo.us)
+
+AC_PREFIX_DEFAULT(/usr/local)
+if test $mandir = '${prefix}/man';then
+mandir=/usr/share/man
+AC_SUBST(mandir)
+fi
+
+AC_CONFIG_HEADER([config.h])
+
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+
+AC_HEADER_STDC
+AC_CHECK_FUNCS([ftruncate], ,AC_MSG_ERROR(Missing required function for rr to compile))
+AC_CHECK_FUNCS([glob])
+AC_CHECK_HEADERS([fcntl.h glob.h string.h strings.h pwd.h sys/fcntl.h sys/stat.h sys/types.h])
+AC_PROG_GCC_TRADITIONAL
+
+AC_OUTPUT([Makefile])
